@@ -1,6 +1,8 @@
 package jcsgomain;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import jcsgomain.logic;
 
@@ -39,6 +41,9 @@ public class jCSGO extends javax.swing.JFrame {
         menuFileExit = new javax.swing.JMenuItem();
         menuServer = new javax.swing.JMenu();
         menuServerDetails = new javax.swing.JMenuItem();
+        menuServerServerconfig = new javax.swing.JMenuItem();
+        menuServerMaplist = new javax.swing.JMenuItem();
+        menuServerMapcycle = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +102,30 @@ public class jCSGO extends javax.swing.JFrame {
         });
         menuServer.add(menuServerDetails);
 
+        menuServerServerconfig.setText("Server config");
+        menuServerServerconfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuServerServerconfigActionPerformed(evt);
+            }
+        });
+        menuServer.add(menuServerServerconfig);
+
+        menuServerMaplist.setText("Maplist");
+        menuServerMaplist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuServerMaplistActionPerformed(evt);
+            }
+        });
+        menuServer.add(menuServerMaplist);
+
+        menuServerMapcycle.setText("Mapcycle");
+        menuServerMapcycle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuServerMapcycleActionPerformed(evt);
+            }
+        });
+        menuServer.add(menuServerMapcycle);
+
         jMenuBar.add(menuServer);
 
         setJMenuBar(jMenuBar);
@@ -106,39 +135,45 @@ public class jCSGO extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(994, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton1))
+                                    .addComponent(jLabel1))
+                                .addGap(252, 570, Short.MAX_VALUE)))))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(339, 339, 339))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(175, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,6 +195,18 @@ public class jCSGO extends javax.swing.JFrame {
     private void menuFileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFileExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_menuFileExitActionPerformed
+
+    private void menuServerServerconfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerServerconfigActionPerformed
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/cfg/csgoserver.cfg");
+    }//GEN-LAST:event_menuServerServerconfigActionPerformed
+
+    private void menuServerMaplistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerMaplistActionPerformed
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/maplist.txt");
+    }//GEN-LAST:event_menuServerMaplistActionPerformed
+
+    private void menuServerMapcycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerMapcycleActionPerformed
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt");
+    }//GEN-LAST:event_menuServerMapcycleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,19 +246,40 @@ public class jCSGO extends javax.swing.JFrame {
     private void process(String command) {
         String s;
         Process p;
+        BufferedReader br = null;
         try {
-            txtInfo.append(command);
+            txtInfo.append(command + "\n");
             p = Runtime.getRuntime().exec(command);
-            BufferedReader br = new BufferedReader(
+            br = new BufferedReader(
                     new InputStreamReader(p.getInputStream()));
+
+            while ((s = br.readLine()) != null) {
+//                System.out.println("line: " + s);
+                txtInfo.append(s + "\n");
+            }
+            p.waitFor();
+            txtInfo.append("exit: " + p.exitValue() + "\n");
+            p.destroy();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private void processFile(String file) {
+        String s;
+        Process p;
+        File f;
+        BufferedReader br = null;
+        try {
+            txtInfo.append("Reading file: " + file + "\n");
+            f = new File(file);
+            br = new BufferedReader(new FileReader(f));
+
             while ((s = br.readLine()) != null) {
 //                System.out.println("line: " + s);
                 txtInfo.append(s + "\n");
                 txtInfo.updateUI();
             }
-            p.waitFor();
-            txtInfo.append("exit: " + p.exitValue() + "\n");
-            p.destroy();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -229,6 +297,9 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuFileExit;
     private javax.swing.JMenu menuServer;
     private javax.swing.JMenuItem menuServerDetails;
+    private javax.swing.JMenuItem menuServerMapcycle;
+    private javax.swing.JMenuItem menuServerMaplist;
+    private javax.swing.JMenuItem menuServerServerconfig;
     private javax.swing.JTextField txtDefaultFolder;
     private javax.swing.JTextArea txtInfo;
     // End of variables declaration//GEN-END:variables
