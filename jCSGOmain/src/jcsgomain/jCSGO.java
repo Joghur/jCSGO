@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import jcsgomain.logic;
+import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import javax.management.Query;
+import javax.swing.JList;
 
 /**
  *
@@ -17,6 +20,9 @@ public class jCSGO extends javax.swing.JFrame {
      */
     public jCSGO() {
         initComponents();
+        startInfo();
+        IOcommunications io = new IOcommunications();
+//        io.setDefaultFolder("/home/steam/LinuxGSM-master");
     }
 
     /**
@@ -31,11 +37,21 @@ public class jCSGO extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtDefaultFolder = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnRestartServer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtInfo = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtMapcycle = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnArmsRace = new javax.swing.JButton();
+        btnClassicCasual = new javax.swing.JButton();
+        btnClassicCompetitive = new javax.swing.JButton();
+        btnDeathmatch = new javax.swing.JButton();
+        btnDemolition = new javax.swing.JButton();
+        btnWingman = new javax.swing.JButton();
+        btnCustom = new javax.swing.JButton();
+        btnStartServer = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileExit = new javax.swing.JMenuItem();
@@ -59,11 +75,11 @@ public class jCSGO extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
         jLabel2.setText("jCSGO");
 
-        jButton1.setFont(new java.awt.Font("Noto Mono", 0, 36)); // NOI18N
-        jButton1.setText("ENGAGE!!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRestartServer.setFont(new java.awt.Font("Noto Mono", 0, 36)); // NOI18N
+        btnRestartServer.setText("Restart");
+        btnRestartServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRestartServerActionPerformed(evt);
             }
         });
 
@@ -73,12 +89,98 @@ public class jCSGO extends javax.swing.JFrame {
         txtInfo.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtInfo);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        txtMapcycle.setColumns(20);
+        txtMapcycle.setRows(5);
+        jScrollPane3.setViewportView(txtMapcycle);
+
+        jLabel3.setText("MapCycle");
+
+        jToolBar1.setRollover(true);
+
+        btnArmsRace.setText("Arms Race");
+        btnArmsRace.setFocusable(false);
+        btnArmsRace.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnArmsRace.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnArmsRace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArmsRaceActionPerformed(evt);
+            }
         });
-        jScrollPane2.setViewportView(jList1);
+        jToolBar1.add(btnArmsRace);
+
+        btnClassicCasual.setText("Casual");
+        btnClassicCasual.setFocusable(false);
+        btnClassicCasual.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClassicCasual.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClassicCasual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClassicCasualActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnClassicCasual);
+
+        btnClassicCompetitive.setText("Competitive");
+        btnClassicCompetitive.setFocusable(false);
+        btnClassicCompetitive.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClassicCompetitive.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClassicCompetitive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClassicCompetitiveActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnClassicCompetitive);
+
+        btnDeathmatch.setText("Deathmatch");
+        btnDeathmatch.setFocusable(false);
+        btnDeathmatch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDeathmatch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDeathmatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeathmatchActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDeathmatch);
+
+        btnDemolition.setText("Demolition");
+        btnDemolition.setFocusable(false);
+        btnDemolition.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDemolition.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDemolition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDemolitionActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDemolition);
+
+        btnWingman.setText("Wingman");
+        btnWingman.setFocusable(false);
+        btnWingman.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnWingman.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnWingman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWingmanActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnWingman);
+
+        btnCustom.setText("Custom");
+        btnCustom.setFocusable(false);
+        btnCustom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCustom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCustom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCustom);
+
+        btnStartServer.setFont(new java.awt.Font("Noto Mono", 0, 18)); // NOI18N
+        btnStartServer.setText("Start server");
+        btnStartServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartServerActionPerformed(evt);
+            }
+        });
 
         menuFile.setText("File");
 
@@ -134,46 +236,59 @@ public class jCSGO extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1))
-                                    .addComponent(jLabel1))
-                                .addGap(252, 570, Short.MAX_VALUE)))))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                                        .addGap(96, 96, 96)
+                                        .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41)
+                                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(69, 69, 69)
+                                        .addComponent(btnRestartServer)))
+                                .addGap(0, 69, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addGap(1, 1, 1)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnRestartServer)
+                                        .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,10 +298,10 @@ public class jCSGO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDefaultFolderActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRestartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestartServerActionPerformed
         process("/home/steam/LinuxGSM-master/csgoserver restart");
         process("/home/steam/LinuxGSM-master/startcsgo.sh");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRestartServerActionPerformed
 
     private void menuServerDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerDetailsActionPerformed
         process("/home/steam/LinuxGSM-master/csgoserver details");
@@ -207,6 +322,73 @@ public class jCSGO extends javax.swing.JFrame {
     private void menuServerMapcycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerMapcycleActionPerformed
         processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt");
     }//GEN-LAST:event_menuServerMapcycleActionPerformed
+
+    private void btnDemolitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDemolitionActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "1");
+        io.replaceSelected(str, "gamemode", "1");
+    }//GEN-LAST:event_btnDemolitionActionPerformed
+
+    private void btnStartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartServerActionPerformed
+        process("/home/steam/LinuxGSM-master/csgoserver start");
+        process("/home/steam/LinuxGSM-master/startcsgo.sh");
+    }//GEN-LAST:event_btnStartServerActionPerformed
+
+    private void btnArmsRaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArmsRaceActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "1");
+        io.replaceSelected(str, "gamemode", "0");;
+        txtInfo.append("Changing gamemode to ArmsRace");
+    }//GEN-LAST:event_btnArmsRaceActionPerformed
+
+    private void btnClassicCasualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCasualActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "0");
+        io.replaceSelected(str, "gamemode", "0");
+        txtInfo.append("Changing gamemode to Casual");
+    }//GEN-LAST:event_btnClassicCasualActionPerformed
+
+    private void btnDeathmatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeathmatchActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "1");
+        io.replaceSelected(str, "gamemode", "2");
+        txtInfo.append("Changing gamemode to Deathmatch");
+    }//GEN-LAST:event_btnDeathmatchActionPerformed
+
+    private void btnClassicCompetitiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCompetitiveActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "0");
+        io.replaceSelected(str, "gamemode", "1");
+        txtInfo.append("Changing gamemode to Competitive");
+    }//GEN-LAST:event_btnClassicCompetitiveActionPerformed
+
+    private void btnCustomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "3");
+        io.replaceSelected(str, "gamemode", "0");
+        txtInfo.append("Changing gamemode to Custom");
+    }//GEN-LAST:event_btnCustomActionPerformed
+
+    private void btnWingmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWingmanActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        io.replaceSelected(str, "gametype", "0");
+        io.replaceSelected(str, "gamemode", "2");
+        txtInfo.append("Changing gamemode to Wingman");
+    }//GEN-LAST:event_btnWingmanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,14 +467,49 @@ public class jCSGO extends javax.swing.JFrame {
         }
     }
 
+    private ArrayList<String> fileInfoArray(String file) {
+        String s;
+        Process p;
+        File f;
+        BufferedReader br = null;
+        ArrayList<String> maps = new ArrayList<>();
+        try {
+            txtInfo.append("Reading file: " + file + "\n");
+            f = new File(file);
+            br = new BufferedReader(new FileReader(f));
+
+            while ((s = br.readLine()) != null) {
+                maps.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return maps;
+    }
+
+    private void startInfo() {
+        for (String map : fileInfoArray("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt")) {
+            txtMapcycle.append(map + "\n");
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnArmsRace;
+    private javax.swing.JButton btnClassicCasual;
+    private javax.swing.JButton btnClassicCompetitive;
+    private javax.swing.JButton btnCustom;
+    private javax.swing.JButton btnDeathmatch;
+    private javax.swing.JButton btnDemolition;
+    private javax.swing.JButton btnRestartServer;
+    private javax.swing.JButton btnStartServer;
+    private javax.swing.JButton btnWingman;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuFileExit;
     private javax.swing.JMenu menuServer;
@@ -302,5 +519,6 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuServerServerconfig;
     private javax.swing.JTextField txtDefaultFolder;
     private javax.swing.JTextArea txtInfo;
+    private javax.swing.JTextArea txtMapcycle;
     // End of variables declaration//GEN-END:variables
 }
