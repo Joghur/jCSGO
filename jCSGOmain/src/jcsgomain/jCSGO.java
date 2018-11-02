@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
-import javax.management.Query;
-import javax.swing.JList;
 
 /**
  *
@@ -22,7 +20,11 @@ public class jCSGO extends javax.swing.JFrame {
         initComponents();
         startInfo();
         IOcommunications io = new IOcommunications();
-//        io.setDefaultFolder("/home/steam/LinuxGSM-master");
+        for (String maps : fileInfoArray(io.getDefaultFolder() + "/"
+                + "serverfiles/csgo/maplist.txt")) {
+            txtMapList.append(maps + "\n");
+            comboDefaultMap.addItem(maps);
+        }
     }
 
     /**
@@ -34,6 +36,8 @@ public class jCSGO extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtMapcycle1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         txtDefaultFolder = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -52,6 +56,13 @@ public class jCSGO extends javax.swing.JFrame {
         btnWingman = new javax.swing.JButton();
         btnCustom = new javax.swing.JButton();
         btnStartServer = new javax.swing.JButton();
+        comboDefaultMap = new javax.swing.JComboBox<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtMapList = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        btnUseSelected = new javax.swing.JButton();
+        btnDeleteSelected = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileExit = new javax.swing.JMenuItem();
@@ -60,6 +71,10 @@ public class jCSGO extends javax.swing.JFrame {
         menuServerServerconfig = new javax.swing.JMenuItem();
         menuServerMaplist = new javax.swing.JMenuItem();
         menuServerMapcycle = new javax.swing.JMenuItem();
+
+        txtMapcycle1.setColumns(20);
+        txtMapcycle1.setRows(5);
+        jScrollPane4.setViewportView(txtMapcycle1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,6 +197,24 @@ public class jCSGO extends javax.swing.JFrame {
             }
         });
 
+        comboDefaultMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDefaultMapActionPerformed(evt);
+            }
+        });
+
+        txtMapList.setColumns(20);
+        txtMapList.setRows(5);
+        jScrollPane5.setViewportView(txtMapList);
+
+        jLabel4.setText("MapList");
+
+        btnUseSelected.setText("Use Selected");
+
+        btnDeleteSelected.setText("Delete Selected");
+
+        jLabel5.setText("Default map");
+
         menuFile.setText("File");
 
         menuFileExit.setText("Exit");
@@ -236,43 +269,57 @@ public class jCSGO extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(96, 96, 96)
-                                        .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5))
                                         .addGap(69, 69, 69)
-                                        .addComponent(btnRestartServer)))
-                                .addGap(0, 69, Short.MAX_VALUE))))
+                                        .addComponent(btnRestartServer))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnUseSelected)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnDeleteSelected)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1247, 1247, 1247)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1115, 1115, 1115)
+                        .addComponent(jLabel4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteSelected, btnUseSelected});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addGap(1, 1, 1)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -285,9 +332,29 @@ public class jCSGO extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(1, 1, 1)
+                                .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnUseSelected)
+                            .addComponent(btnDeleteSelected))))
                 .addContainerGap(182, Short.MAX_VALUE))
         );
 
@@ -342,7 +409,7 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "0");;
-        txtInfo.append("Changing gamemode to ArmsRace");
+        txtInfo.append("Changing gamemode to ArmsRace. Remember to restart server!!\n");
     }//GEN-LAST:event_btnArmsRaceActionPerformed
 
     private void btnClassicCasualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCasualActionPerformed
@@ -351,7 +418,7 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "0");
-        txtInfo.append("Changing gamemode to Casual");
+        txtInfo.append("Changing gamemode to Casual. Remember to restart server!!\n");
     }//GEN-LAST:event_btnClassicCasualActionPerformed
 
     private void btnDeathmatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeathmatchActionPerformed
@@ -360,7 +427,7 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "2");
-        txtInfo.append("Changing gamemode to Deathmatch");
+        txtInfo.append("Changing gamemode to Deathmatch. Remember to restart server!!\n");
     }//GEN-LAST:event_btnDeathmatchActionPerformed
 
     private void btnClassicCompetitiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCompetitiveActionPerformed
@@ -369,7 +436,7 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "1");
-        txtInfo.append("Changing gamemode to Competitive");
+        txtInfo.append("Changing gamemode to Competitive. Remember to restart server!!\n");
     }//GEN-LAST:event_btnClassicCompetitiveActionPerformed
 
     private void btnCustomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomActionPerformed
@@ -378,7 +445,7 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "3");
         io.replaceSelected(str, "gamemode", "0");
-        txtInfo.append("Changing gamemode to Custom");
+        txtInfo.append("Changing gamemode to Custom. Remember to restart server!!\n");
     }//GEN-LAST:event_btnCustomActionPerformed
 
     private void btnWingmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWingmanActionPerformed
@@ -387,8 +454,18 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "2");
-        txtInfo.append("Changing gamemode to Wingman");
+        txtInfo.append("Changing gamemode to Wingman. Remember to restart server!!\n");
     }//GEN-LAST:event_btnWingmanActionPerformed
+
+    private void comboDefaultMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDefaultMapActionPerformed
+        IOcommunications io = new IOcommunications();
+        String str = io.getDefaultFolder() + File.separator
+                + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
+        String map = comboDefaultMap.getSelectedItem().toString();
+        io.replaceSelected(str, "defaultmap", map);
+        txtInfo.append("Changing defaultmap to " + map + ". Remember to restart server!!\n");
+        
+    }//GEN-LAST:event_comboDefaultMapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -499,16 +576,23 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JButton btnClassicCompetitive;
     private javax.swing.JButton btnCustom;
     private javax.swing.JButton btnDeathmatch;
+    private javax.swing.JButton btnDeleteSelected;
     private javax.swing.JButton btnDemolition;
     private javax.swing.JButton btnRestartServer;
     private javax.swing.JButton btnStartServer;
+    private javax.swing.JButton btnUseSelected;
     private javax.swing.JButton btnWingman;
+    private javax.swing.JComboBox<String> comboDefaultMap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuFileExit;
@@ -519,6 +603,8 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuServerServerconfig;
     private javax.swing.JTextField txtDefaultFolder;
     private javax.swing.JTextArea txtInfo;
+    private javax.swing.JTextArea txtMapList;
     private javax.swing.JTextArea txtMapcycle;
+    private javax.swing.JTextArea txtMapcycle1;
     // End of variables declaration//GEN-END:variables
 }
