@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -25,7 +23,7 @@ public class jCSGO extends javax.swing.JFrame {
     Font FONT_NOTOSANS_PLAIN_12 = new Font("notosans", Font.PLAIN, 12);
     Font FONT_NOTOSANS_BOLD_12 = new Font("notosans", Font.BOLD, 12);
     Font FONT_NOTOSANS_ITALIC_12 = new Font("notosans", Font.ITALIC, 12);
-    Font FONT_NOTOSANS_BOLD_ITALIC_12 = new Font("notosans", Font.PLAIN, 12);
+    Font FONT_NOTOSANS_BOLD_ITALIC_12 = new Font("notosans", Font.BOLD + Font.ITALIC, 12);
 
     /**
      * Creates new form jCSGO
@@ -61,8 +59,6 @@ public class jCSGO extends javax.swing.JFrame {
         txtDefaultFolder = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnRestartServer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtInfo = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtMapcycle = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
@@ -121,12 +117,6 @@ public class jCSGO extends javax.swing.JFrame {
                 btnRestartServerActionPerformed(evt);
             }
         });
-
-        txtInfo.setColumns(20);
-        txtInfo.setLineWrap(true);
-        txtInfo.setRows(5);
-        txtInfo.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(txtInfo);
 
         txtMapcycle.setColumns(20);
         txtMapcycle.setRows(5);
@@ -324,9 +314,6 @@ public class jCSGO extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(96, 96, 96)
@@ -343,14 +330,15 @@ public class jCSGO extends javax.swing.JFrame {
                                             .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5))
+                                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(69, 69, 69)
                                         .addComponent(btnRestartServer))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnClearTextArea)
                                         .addGap(33, 33, 33)))))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -395,12 +383,7 @@ public class jCSGO extends javax.swing.JFrame {
                             .addComponent(btnDeleteSelected)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5)
-                                .addGap(1, 1, 1)
-                                .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -409,21 +392,21 @@ public class jCSGO extends javax.swing.JFrame {
                                         .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(49, 49, 49)
+                                        .addComponent(btnClearTextArea))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel6))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(49, 49, 49)
-                                        .addComponent(btnClearTextArea)))))
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
 
@@ -465,9 +448,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "1");
-        
-        displayFormatedText(txtPane, "Changing gamemode to Demolition. Remember "
-                + "to restart server!!\n", FONT_NOTOSANS_PLAIN_12, Color.RED);
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Demolition", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnDemolitionActionPerformed
 
     private void btnStartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartServerActionPerformed
@@ -635,18 +621,26 @@ public class jCSGO extends javax.swing.JFrame {
                 String[] ip = s.split("csgoserver:");
                 try {
                     // removing special formating from bash script
-                    if (s.trim().endsWith("[0m")) {
-                        s = s.substring(0, s.length() - 3);
-                    }
+                    s = s.replace("[0m", "");
                     if (ip[1].trim().startsWith("Check IP: ")) {
                         txtIPaddress.setText(ip[1].substring(10));
                     }
                 } catch (Exception ex) {
                 }
-                displayFormatedText(txtPane, s + "\n", font, color);
+                if (s.contains("[93m") || s.contains("[92m")) {
+                    s = s.replace("[93m", "");
+                    s = s.replace("[92m", "");
+                    displayFormatedText(txtPane, s + "\n", FONT_NOTOSANS_BOLD_12, Color.BLUE);
+                } else if (s.contains("[34m") || s.contains("[32m")) {
+                    s = s.replace("[34m", "");
+                    s = s.replace("[32m", "");
+                    displayFormatedText(txtPane, s + "\n", font, color);
+                } else {
+                    displayFormatedText(txtPane, s + "\n", font, color);
+                }
             }
             p.waitFor();
-            
+
             displayFormatedText(txtPane, "Exit: " + p.exitValue() + "\n", font, color);
             p.destroy();
         } catch (Exception e) {
@@ -659,12 +653,17 @@ public class jCSGO extends javax.swing.JFrame {
         File f;
         BufferedReader br = null;
         try {
-            displayFormatedText(txtPane, "Reading file: " + file + "\n", font, color);
+            displayFormatedText(txtPane, "Reading file: ", font, color);
+            displayFormatedText(txtPane, file + "\n", FONT_NOTOSANS_ITALIC_12, color);
             f = new File(file);
             br = new BufferedReader(new FileReader(f));
 
             while ((s = br.readLine()) != null) {
-                displayFormatedText(txtPane, s + "\n", font, color);
+                if (s.startsWith("//")) {
+                    displayFormatedText(txtPane, s + "\n", FONT_NOTOSANS_BOLD_12, Color.BLUE);
+                } else {
+                    displayFormatedText(txtPane, s + "\n", font, color);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -677,7 +676,8 @@ public class jCSGO extends javax.swing.JFrame {
         BufferedReader br = null;
         ArrayList<String> maps = new ArrayList<>();
         try {
-            displayFormatedText(txtPane, "Reading file: " + file + "\n", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+            displayFormatedText(txtPane, "Reading file: ", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+            displayFormatedText(txtPane, file + "\n", FONT_NOTOSANS_ITALIC_12, Color.BLACK);
             f = new File(file);
             br = new BufferedReader(new FileReader(f));
 
@@ -717,7 +717,6 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -732,7 +731,6 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuServerServerconfig;
     private javax.swing.JTextField txtDefaultFolder;
     private javax.swing.JTextField txtIPaddress;
-    private javax.swing.JTextArea txtInfo;
     private javax.swing.JTextArea txtMapList;
     private javax.swing.JTextArea txtMapcycle;
     private javax.swing.JTextArea txtMapcycle1;
