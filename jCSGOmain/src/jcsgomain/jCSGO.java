@@ -1,12 +1,20 @@
 package jcsgomain;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -14,11 +22,20 @@ import java.util.ArrayList;
  */
 public class jCSGO extends javax.swing.JFrame {
 
+    Font FONT_NOTOSANS_PLAIN_12 = new Font("notosans", Font.PLAIN, 12);
+    Font FONT_NOTOSANS_BOLD_12 = new Font("notosans", Font.BOLD, 12);
+    Font FONT_NOTOSANS_ITALIC_12 = new Font("notosans", Font.ITALIC, 12);
+    Font FONT_NOTOSANS_BOLD_ITALIC_12 = new Font("notosans", Font.PLAIN, 12);
+
     /**
      * Creates new form jCSGO
      */
     public jCSGO() {
         initComponents();
+        setup();
+    }
+
+    public void setup() {
         startInfo();
         IOcommunications io = new IOcommunications();
         for (String maps : fileInfoArray(io.getDefaultFolder() + "/"
@@ -26,9 +43,7 @@ public class jCSGO extends javax.swing.JFrame {
             txtMapList.append(maps + "\n");
             comboDefaultMap.addItem(maps);
         }
-//        for (Object object : scriptInfoArray()) {
-//            
-//        }
+//            display();
     }
 
     /**
@@ -70,6 +85,8 @@ public class jCSGO extends javax.swing.JFrame {
         btnClearTextArea = new javax.swing.JButton();
         txtIPaddress = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtPane = new javax.swing.JTextPane();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileExit = new javax.swing.JMenuItem();
@@ -239,6 +256,8 @@ public class jCSGO extends javax.swing.JFrame {
 
         jLabel6.setText("Default server folder:");
 
+        jScrollPane2.setViewportView(txtPane);
+
         menuFile.setText("File");
 
         menuFileExit.setText("Exit");
@@ -301,7 +320,12 @@ public class jCSGO extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -355,6 +379,21 @@ public class jCSGO extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnUseSelected)
+                            .addComponent(btnDeleteSelected)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -382,24 +421,10 @@ public class jCSGO extends javax.swing.JFrame {
                                         .addGap(49, 49, 49)
                                         .addComponent(btnClearTextArea)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnUseSelected)
-                            .addComponent(btnDeleteSelected))
-                        .addGap(0, 367, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         pack();
@@ -410,12 +435,12 @@ public class jCSGO extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDefaultFolderActionPerformed
 
     private void btnRestartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestartServerActionPerformed
-        process("/home/steam/LinuxGSM-master/csgoserver restart");
-        process("/home/steam/LinuxGSM-master/startcsgo.sh");
+        process("/home/steam/LinuxGSM-master/csgoserver restart", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        process("/home/steam/LinuxGSM-master/startcsgo.sh", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnRestartServerActionPerformed
 
     private void menuServerDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerDetailsActionPerformed
-        process("/home/steam/LinuxGSM-master/csgoserver details");
+        process("/home/steam/LinuxGSM-master/csgoserver details", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_menuServerDetailsActionPerformed
 
     private void menuFileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFileExitActionPerformed
@@ -423,15 +448,15 @@ public class jCSGO extends javax.swing.JFrame {
     }//GEN-LAST:event_menuFileExitActionPerformed
 
     private void menuServerServerconfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerServerconfigActionPerformed
-        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/cfg/csgoserver.cfg");
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/cfg/csgoserver.cfg", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_menuServerServerconfigActionPerformed
 
     private void menuServerMaplistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerMaplistActionPerformed
-        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/maplist.txt");
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/maplist.txt", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_menuServerMaplistActionPerformed
 
     private void menuServerMapcycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServerMapcycleActionPerformed
-        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt");
+        processFile("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_menuServerMapcycleActionPerformed
 
     private void btnDemolitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDemolitionActionPerformed
@@ -440,12 +465,14 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "1");
-        txtInfo.append("Changing gamemode to Demolition. Remember to restart server!!\n");
+        
+        displayFormatedText(txtPane, "Changing gamemode to Demolition. Remember "
+                + "to restart server!!\n", FONT_NOTOSANS_PLAIN_12, Color.RED);
     }//GEN-LAST:event_btnDemolitionActionPerformed
 
     private void btnStartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartServerActionPerformed
-        process("/home/steam/LinuxGSM-master/csgoserver start");
-        process("/home/steam/LinuxGSM-master/startcsgo.sh");
+        process("/home/steam/LinuxGSM-master/csgoserver start", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        process("/home/steam/LinuxGSM-master/startcsgo.sh", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnStartServerActionPerformed
 
     private void btnArmsRaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArmsRaceActionPerformed
@@ -454,7 +481,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "0");
-        txtInfo.append("Changing gamemode to ArmsRace. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "ArmsRace", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnArmsRaceActionPerformed
 
     private void btnClassicCasualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCasualActionPerformed
@@ -463,7 +495,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "0");
-        txtInfo.append("Changing gamemode to Casual. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Casual", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnClassicCasualActionPerformed
 
     private void btnDeathmatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeathmatchActionPerformed
@@ -472,7 +509,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "1");
         io.replaceSelected(str, "gamemode", "2");
-        txtInfo.append("Changing gamemode to Deathmatch. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Deathmatch", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnDeathmatchActionPerformed
 
     private void btnClassicCompetitiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassicCompetitiveActionPerformed
@@ -481,7 +523,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "1");
-        txtInfo.append("Changing gamemode to Competitive. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Competitive", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnClassicCompetitiveActionPerformed
 
     private void btnCustomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomActionPerformed
@@ -490,7 +537,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "3");
         io.replaceSelected(str, "gamemode", "0");
-        txtInfo.append("Changing gamemode to Custom. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Custom", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnCustomActionPerformed
 
     private void btnWingmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWingmanActionPerformed
@@ -499,7 +551,12 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         io.replaceSelected(str, "gametype", "0");
         io.replaceSelected(str, "gamemode", "2");
-        txtInfo.append("Changing gamemode to Wingman. Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing gamemode to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "Wingman", FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
     }//GEN-LAST:event_btnWingmanActionPerformed
 
     private void comboDefaultMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDefaultMapActionPerformed
@@ -508,12 +565,21 @@ public class jCSGO extends javax.swing.JFrame {
                 + FileSystems.getDefault().getPath("lgsm", "config-lgsm", "csgoserver", "csgoserver.cfg");
         String map = comboDefaultMap.getSelectedItem().toString();
         io.replaceSelected(str, "defaultmap", map);
-        txtInfo.append("Changing defaultmap to " + map + ". Remember to restart server!!\n");
+
+        displayFormatedText(txtPane, "Changing  ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, "defaultmap",
+                FONT_NOTOSANS_BOLD_12, Color.BLACK);
+        displayFormatedText(txtPane, " to ",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
+        displayFormatedText(txtPane, map, FONT_NOTOSANS_PLAIN_12, Color.RED);
+        displayFormatedText(txtPane, ". Remember to restart server!!\n",
+                FONT_NOTOSANS_PLAIN_12, Color.BLACK);
 
     }//GEN-LAST:event_comboDefaultMapActionPerformed
 
     private void btnClearTextAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearTextAreaActionPerformed
-        txtInfo.setText("");
+        txtPane.setText("");
     }//GEN-LAST:event_btnClearTextAreaActionPerformed
 
     private void txtIPaddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIPaddressActionPerformed
@@ -555,12 +621,12 @@ public class jCSGO extends javax.swing.JFrame {
         });
     }
 
-    private void process(String command) {
+    public void process(String command, Font font, Color color) {
         String s;
         Process p;
         BufferedReader br = null;
         try {
-            txtInfo.append(command + "\n");
+            displayFormatedText(txtPane, command + "\n", font, color);
             p = Runtime.getRuntime().exec(command);
             br = new BufferedReader(
                     new InputStreamReader(p.getInputStream()));
@@ -568,47 +634,50 @@ public class jCSGO extends javax.swing.JFrame {
             while ((s = br.readLine()) != null) {
                 String[] ip = s.split("csgoserver:");
                 try {
+                    // removing special formating from bash script
+                    if (s.trim().endsWith("[0m")) {
+                        s = s.substring(0, s.length() - 3);
+                    }
                     if (ip[1].trim().startsWith("Check IP: ")) {
                         txtIPaddress.setText(ip[1].substring(10));
                     }
                 } catch (Exception ex) {
                 }
-                txtInfo.append(s + "\n");
+                displayFormatedText(txtPane, s + "\n", font, color);
             }
             p.waitFor();
-            txtInfo.append("exit: " + p.exitValue() + "\n");
+            
+            displayFormatedText(txtPane, "Exit: " + p.exitValue() + "\n", font, color);
             p.destroy();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    private void processFile(String file) {
+    public void processFile(String file, Font font, Color color) {
         String s;
-        Process p;
         File f;
         BufferedReader br = null;
         try {
-            txtInfo.append("Reading file: " + file + "\n");
+            displayFormatedText(txtPane, "Reading file: " + file + "\n", font, color);
             f = new File(file);
             br = new BufferedReader(new FileReader(f));
 
             while ((s = br.readLine()) != null) {
-                txtInfo.append(s + "\n");
+                displayFormatedText(txtPane, s + "\n", font, color);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    private ArrayList<String> fileInfoArray(String file) {
+    public ArrayList<String> fileInfoArray(String file) {
         String s;
-        Process p;
         File f;
         BufferedReader br = null;
         ArrayList<String> maps = new ArrayList<>();
         try {
-            txtInfo.append("Reading file: " + file + "\n");
+            displayFormatedText(txtPane, "Reading file: " + file + "\n", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
             f = new File(file);
             br = new BufferedReader(new FileReader(f));
 
@@ -621,7 +690,7 @@ public class jCSGO extends javax.swing.JFrame {
         return maps;
     }
 
-    private void startInfo() {
+    public void startInfo() {
         for (String map : fileInfoArray("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt")) {
             txtMapcycle.append(map + "\n");
         }
@@ -649,6 +718,7 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -666,5 +736,39 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JTextArea txtMapList;
     private javax.swing.JTextArea txtMapcycle;
     private javax.swing.JTextArea txtMapcycle1;
+    private javax.swing.JTextPane txtPane;
     // End of variables declaration//GEN-END:variables
+
+    public void displayFormatedText(JTextPane tp, String txt, Font font, Color color) {
+
+        StyledDocument doc = (StyledDocument) tp.getDocument();
+        try {
+
+            doc.insertString(doc.getLength(), txt, displayFormat(font, color));
+
+        } catch (BadLocationException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public SimpleAttributeSet displayFormat(Font font, Color color) {
+//        Font trb_18 = new Font("TimesRoman", Font.BOLD, 18);
+//        Font tri = new Font("TimesRoman", Font.ITALIC, 18);
+//        Font times_b_i = new Font("TimesRoman", Font.BOLD + Font.ITALIC, 18);
+//        Font h = new Font("Helvetica", Font.PLAIN, 18);
+//        Font c = new Font("Courier", Font.PLAIN, 18);
+//        Font d = new Font("Dialog", Font.PLAIN, 18);
+//        Font z = new Font("ZapfDingbats", Font.PLAIN, 18);
+        SimpleAttributeSet sAS = new SimpleAttributeSet();
+
+        StyleConstants.setFontFamily(sAS, font.getFamily());
+        StyleConstants.setFontSize(sAS, font.getSize());
+        StyleConstants.setBold(sAS, font.isBold());
+        StyleConstants.setItalic(sAS, font.isItalic());
+        StyleConstants.setForeground(sAS, color);
+
+        return sAS;
+    }
+
 }
