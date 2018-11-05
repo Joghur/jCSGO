@@ -2,10 +2,14 @@ package jcsgomain;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,18 +17,40 @@ import java.nio.file.FileSystems;
  */
 public class IOcommunications {
 
-    private String defaultFolder="/home/steam/LinuxGSM-master";
+    private ArrayList<String> settings = new ArrayList<>();
+    private String defaultFolder;// = "/home/steam/LinuxGSM-master";
+    private String config;
+    private String config2;
     private String file;
     private String line;
     private String change;
 
     public IOcommunications() {
-    }
+        String add = System.getProperty("user.dir") +"/settings.csv";
 
-    public IOcommunications(String file, String line, String change) {
-        this.file = file;
-        this.line = line;
-        this.change = change;
+        settings = readFile(add);
+        String[] s;
+        for (String setting : settings) {
+            s = setting.split(",");
+            switch (s[0]) {
+                case "Default server folder":
+                    setDefaultFolder(s[1]);
+                    break;
+
+                case "Server config gamemodes":
+                    setConfig(s[1]);
+                    break;
+
+                case "Server config info":
+                    setConfig2(s[1]);
+                    break;
+
+                default:
+                    System.out.println("No settings found!");
+                    break;
+
+            }
+        }
     }
 
     public String getFile() {
@@ -43,8 +69,24 @@ public class IOcommunications {
         return defaultFolder;
     }
 
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    public void setConfig2(String config2) {
+        this.config2 = config2;
+    }
+
     public void setDefaultFolder(String defaultFolder) {
         this.defaultFolder = defaultFolder;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public String getConfig2() {
+        return config2;
     }
 
 //    public void replaceSelected(String file, String lines, String change) {
@@ -52,7 +94,6 @@ public class IOcommunications {
         File fileToBeModified = new File(filePath);
         String oldContent = "";
         BufferedReader reader = null;
-        FileWriter writer = null;
 
         try {
             reader = new BufferedReader(new FileReader(fileToBeModified));
@@ -68,21 +109,68 @@ public class IOcommunications {
                 lines = reader.readLine();
             }
 
-            //Rewriting the input text file with newContent
-            writer = new FileWriter(fileToBeModified);
-            writer.write(oldContent);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+            writeFile(filePath, oldContent);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
         } finally {
             try {
                 //Closing the resources
                 reader.close();
-                writer.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
+    }
+
+    public ArrayList<String> readFile(String filePath) {
+        ArrayList<String> fileContent = new ArrayList<>();
+        File fileToBeModified = new File(filePath);
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+            String lines = reader.readLine();
+            while (lines != null) {
+                fileContent.add(lines);
+                lines = reader.readLine();
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return fileContent;
+    }
+
+    public void writeFile(String filePath, String content) {
+        File fileToBeModified = new File(filePath);
+        try {
+            FileWriter writer = new FileWriter(fileToBeModified);
+            writer.write(content);
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public ArrayList<String> fileInfoArray(String file) {
+        String s;
+        File f;
+        BufferedReader br = null;
+        ArrayList<String> maps = new ArrayList<>();
+        try {
+            f = new File(file);
+            br = new BufferedReader(new FileReader(f));
+
+            while ((s = br.readLine()) != null) {
+                maps.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return maps;
     }
 
     public static void main(String[] args) {
@@ -93,6 +181,6 @@ public class IOcommunications {
         System.out.println(System.getProperty("user.dir"));
         io.replaceSelected(io.getDefaultFolder() + File.separator
                 + FileSystems.getDefault().getPath("serverfiles", "csgo", "cfg", "atest.cfg"),
-                "gametype","192.168.1.114");
+                "gametype", "192.168.1.13332");
     }
 }

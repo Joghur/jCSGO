@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
-import java.util.ArrayList;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -34,14 +33,19 @@ public class jCSGO extends javax.swing.JFrame {
     }
 
     public void setup() {
-        startInfo();
         IOcommunications io = new IOcommunications();
-        for (String maps : fileInfoArray(io.getDefaultFolder() + "/"
+        txtDefaultFolder.setText(io.getDefaultFolder());
+
+        displayFormatedText(txtPane, io.getDefaultFolder() + "\n", FONT_NOTOSANS_BOLD_12, Color.RED);
+        for (String maps : io.readFile(io.getDefaultFolder() + "/"
                 + "serverfiles/csgo/maplist.txt")) {
             txtMapList.append(maps + "\n");
             comboDefaultMap.addItem(maps);
         }
-//            display();
+        for (String map : io.readFile("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt")) {
+            txtMapcycle.append(map + "\n");
+        }
+
     }
 
     /**
@@ -83,6 +87,8 @@ public class jCSGO extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtPane = new javax.swing.JTextPane();
+        jLabel7 = new javax.swing.JLabel();
+        txtServerName = new javax.swing.JTextField();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileExit = new javax.swing.JMenuItem();
@@ -100,7 +106,6 @@ public class jCSGO extends javax.swing.JFrame {
 
         jLabel1.setText("IP address:");
 
-        txtDefaultFolder.setText("/home/steam/LinuxGSM-master");
         txtDefaultFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDefaultFolderActionPerformed(evt);
@@ -248,6 +253,14 @@ public class jCSGO extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(txtPane);
 
+        jLabel7.setText("Server Name:");
+
+        txtServerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtServerNameActionPerformed(evt);
+            }
+        });
+
         menuFile.setText("File");
 
         menuFileExit.setText("Exit");
@@ -319,17 +332,19 @@ public class jCSGO extends javax.swing.JFrame {
                                         .addGap(96, 96, 96)
                                         .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(8, 8, 8)
-                                                .addComponent(jLabel6)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel1)
-                                            .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(69, 69, 69)
@@ -338,26 +353,26 @@ public class jCSGO extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel5))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnClearTextArea)
-                                        .addGap(33, 33, 33)))))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnUseSelected)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 82, 82)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnDeleteSelected)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(76, 76, 76))
-            .addGroup(layout.createSequentialGroup()
+                                        .addGap(592, 592, 592)
+                                        .addComponent(btnClearTextArea)))))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1247, 1247, 1247)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1115, 1115, 1115)
-                        .addComponent(jLabel4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnUseSelected)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(82, 82, 82))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(154, 154, 154)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnDeleteSelected)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(76, 76, 76))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(141, 141, 141))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDeleteSelected, btnUseSelected});
@@ -370,13 +385,12 @@ public class jCSGO extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnUseSelected)
@@ -395,16 +409,24 @@ public class jCSGO extends javax.swing.JFrame {
                                         .addGap(49, 49, 49)
                                         .addComponent(btnClearTextArea))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(1, 1, 1)
+                                                .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                .addGap(1, 1, 1)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtIPaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtDefaultFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(1, 1, 1)
+                                                .addComponent(comboDefaultMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(105, Short.MAX_VALUE))
@@ -572,6 +594,10 @@ public class jCSGO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIPaddressActionPerformed
 
+    private void txtServerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtServerNameActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -618,6 +644,10 @@ public class jCSGO extends javax.swing.JFrame {
                     new InputStreamReader(p.getInputStream()));
 
             while ((s = br.readLine()) != null) {
+                s = s.trim();
+                s = s.replace("[K[ .... ] ", "");
+                s = s.replace("[36m INFO", "");
+                s = s.replace("[K[ ", "");
                 String[] ip = s.split("csgoserver:");
                 try {
                     // removing special formating from bash script
@@ -640,8 +670,6 @@ public class jCSGO extends javax.swing.JFrame {
                 }
             }
             p.waitFor();
-
-            displayFormatedText(txtPane, "Exit: " + p.exitValue() + "\n", font, color);
             p.destroy();
         } catch (Exception e) {
             System.out.println(e);
@@ -670,31 +698,6 @@ public class jCSGO extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<String> fileInfoArray(String file) {
-        String s;
-        File f;
-        BufferedReader br = null;
-        ArrayList<String> maps = new ArrayList<>();
-        try {
-            displayFormatedText(txtPane, "Reading file: ", FONT_NOTOSANS_PLAIN_12, Color.BLACK);
-            displayFormatedText(txtPane, file + "\n", FONT_NOTOSANS_ITALIC_12, Color.BLACK);
-            f = new File(file);
-            br = new BufferedReader(new FileReader(f));
-
-            while ((s = br.readLine()) != null) {
-                maps.add(s);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return maps;
-    }
-
-    public void startInfo() {
-        for (String map : fileInfoArray("/home/steam/LinuxGSM-master/serverfiles/csgo/mapcycle.txt")) {
-            txtMapcycle.append(map + "\n");
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArmsRace;
@@ -716,6 +719,7 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -735,6 +739,7 @@ public class jCSGO extends javax.swing.JFrame {
     private javax.swing.JTextArea txtMapcycle;
     private javax.swing.JTextArea txtMapcycle1;
     private javax.swing.JTextPane txtPane;
+    private javax.swing.JTextField txtServerName;
     // End of variables declaration//GEN-END:variables
 
     public void displayFormatedText(JTextPane tp, String txt, Font font, Color color) {
