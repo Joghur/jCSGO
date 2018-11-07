@@ -24,6 +24,7 @@ public class IOcommunications {
     private String file;
     private String line;
     private String change;
+    ;
 
     public IOcommunications() {
         File f = new File(".");
